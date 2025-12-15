@@ -10,11 +10,13 @@ void menu(void);
 NODO* leerArchivo(int* numElementos);
 void imprimirLista(NODO* cabeza);
 void agregarLista(NODO** cabeza);
+void eliminarLista(NODO** cabeza);
 
 int main(void){
     int numElementos = 0;
     int eleccion;
-    NODO* cabeza = leerArchivo(&numElementos); //Leemos el archivo y guardamos el numero de elementos
+    NODO* cabeza;
+    cabeza = leerArchivo(&numElementos); //Leemos el archivo y guardamos el numero de elementos
     fprintf(stdout,"El archivo tiene: %d elementos\n", numElementos);
     do{
         menu();
@@ -25,10 +27,51 @@ int main(void){
         if(eleccion == 2){
             agregarLista(&cabeza);
         }
+        if(eleccion == 3){
+            eliminarLista(&cabeza);
+        }
         if(eleccion > 4 || eleccion < 1){
             fprintf(stdout,"No es una opcion valida\n");
         }
     }while(eleccion != 4);
+}
+
+void eliminarLista(NODO** cabeza){
+    NODO* temp; //Nodo para recorrer la lista
+    NODO* anterior; //Nodo anterior al recorrido
+    int num; //Numero a eliminar
+    FILE* fw; //Reescribiremos el archivo
+    fprintf(stdout,"Ingrese el numero a eliminar: "); //Numero a eliminar
+    fscanf(stdin,"%d",&num);
+    if(*cabeza == NULL){ //La lista esta vacia
+        fprintf(stdout,"No hay que eliminar\n");
+        return;
+    }
+    if((*cabeza)->num == num){ //Si el primero en la lista se tiene que eliminar
+        temp = *cabeza;
+        *cabeza = temp->sig;
+        free(temp);
+    }else{
+        temp = (*cabeza)->sig;
+        anterior = *cabeza;
+        while(temp != NULL && temp->num != num){ //Recorremos hasta encontrar el final
+            temp = temp->sig;
+            anterior = anterior->sig;
+        }
+        if(temp == NULL){ //Si no se encontro
+            fprintf(stdout,"No se encontro el numero\n");
+        }else{
+            anterior->sig = temp->sig;
+            free(temp);
+       }
+    }
+    fw = fopen("binario.bin","wb");
+    temp = *cabeza;
+    while(temp != NULL){
+        fwrite(&temp->num,sizeof(int),1,fw);
+        temp = temp->sig;
+    }
+    fclose(fw);
 }
 
 void agregarLista(NODO** cabeza){
@@ -87,6 +130,7 @@ void menu(void){
     fprintf(stdout,"Opciones:\n");
     fprintf(stdout,"1. Imprimir lista\n");
     fprintf(stdout,"2. Agregar\n");
+    fprintf(stdout,"3. Eliminar\n");
     fprintf(stdout,"4. Salir\n");
     fprintf(stdout,"Ingresar: ");
 }
