@@ -11,6 +11,7 @@ NODO* leerArchivo(int* numElementos);
 void imprimirLista(NODO* cabeza);
 void agregarLista(NODO** cabeza);
 void eliminarLista(NODO** cabeza);
+void liberarMemoria(NODO** cabeza);
 
 int main(void){
     int numElementos = 0;
@@ -34,6 +35,17 @@ int main(void){
             fprintf(stdout,"No es una opcion valida\n");
         }
     }while(eleccion != 4);
+    liberarMemoria(&cabeza);
+}
+
+void liberarMemoria(NODO** cabeza){
+    NODO* temp;
+    while(*cabeza != NULL){ //Recorremos la lista
+        temp = *cabeza; //Copiamos la direccion del nodo a eliminr
+        *cabeza = (*cabeza)->sig;
+        free(temp);
+    }
+    fprintf(stdout,"Se libero la lista\n");
 }
 
 void eliminarLista(NODO** cabeza){
