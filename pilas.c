@@ -27,13 +27,17 @@ int main(void){
             pop(&cabeza);
         }
         if(opcion == 3){
-            if(cabeza != NULL){
+            if(cabeza != NULL){  //Si la lista no esta vacia
                 fprintf(stdout,"Numero en el tope de la pila: %d\n", cabeza->num);
             }else{
                 fprintf(stdout,"La lista esta vacia\n");
             }
         }
     }while(opcion != 4);
+    while(cabeza != NULL){
+        pop(&cabeza);
+    }
+    return 0;
 }
 
 int menu(void){
@@ -49,15 +53,21 @@ int menu(void){
 
 void pop(NODO** cabeza){
     NODO* temp;
-    if(*cabeza != NULL){
+    if(*cabeza != NULL){ //Si la lista no esta vacia borra el ultimo nodo agregado
         temp = *cabeza;
         *cabeza = (*cabeza)->sig;
         free(temp);
+    }else{ //Si esta vacia envia este mensaje
+        fprintf(stdout,"Pila vacia\n");
     }
 }
 
-void push(NODO** cabeza, int num){
+void push(NODO** cabeza, int num){ //Agrega un nuevo nodo al inicio
     NODO* nuevo = malloc(sizeof(NODO));
+    if(nuevo == NULL){ //Verificamos el malloc
+        fprintf(stdout,"Error en memoria\n");
+        return;
+    }
     nuevo->num = num;
     nuevo->sig = *cabeza;
     *cabeza = nuevo;
