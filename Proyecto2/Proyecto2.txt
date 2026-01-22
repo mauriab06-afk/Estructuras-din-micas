@@ -1,0 +1,8 @@
+En este proyecto se creara un sistema de memoria dianamica, para dar de alta y de baja alumnos.
+
+1. Agregar alumno (Se agregara al alumno a la lista dinamica)
+2. Eliminar alumno (Se eliminara el alumno  de la lista dinamica por numero de cuenta)
+3. Editar alumno (Se editara la informacion del alumno en base a su numero de cuenta)
+4. Imprimir alumnos (Se imprimira la lista dinamica)
+5. Guardar cambios (Se guardara en el archivo binario alumnos.bin)
+6. Salir
