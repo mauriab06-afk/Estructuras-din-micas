@@ -12,5 +12,6 @@ void imprimirAlumno(void* datos);
 ALUMNO* leerAlumno(void);
 void liberarAlumno(void* datos);
 int alumnoNumCuenta(void* parametro, void* datos);
+ALUMNO* editarAlumno(int numCuenta);
 
 #endif

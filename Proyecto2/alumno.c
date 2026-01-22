@@ -28,6 +28,24 @@ ALUMNO* leerAlumno(void){
     return alumno;
 }
 
+ALUMNO* editarAlumno(int numCuenta){
+    ALUMNO* alumno = malloc(sizeof(ALUMNO));
+    char temporal[100];
+    alumno->cuenta = numCuenta;
+    fprintf(stdout,"Ingrese el semestre del alumno: ");
+    fscanf(stdin,"%d", &alumno->semestre);
+
+    getchar(); //Elimina el \n que deja el fscanf
+
+    fprintf(stdout, "Ingrese el nombre del alumno: ");
+    fgets(temporal, sizeof(temporal), stdin);
+    strcpy(alumno->nombre, strtok(temporal,"\n"));
+
+    fprintf(stdout, "Ingresa el promedio del alumno: ");
+    fscanf(stdin,"%f", &alumno->promedio);
+    return alumno;
+}
+
 void liberarAlumno(void* datos){
     ALUMNO* temp = (ALUMNO*) datos;
     free(temp);

@@ -26,18 +26,28 @@ int main(void){
     }
     do{
         op = menu();
-        if(op == 1){
+        if(op == 1){ //Agregar alumno
             aux = leerAlumno();
             if(aux != NULL){ //Tiene memoria asignada
                 agregarLista(&frente, &final, aux, sizeof(ALUMNO));
                 free(aux);
             }
-        }else if(op == 2){
+        }else if(op == 2){ //Eliminar alumno
             fprintf(stdout,"Ingrese el numero de cuenta del alumno a eliminar: ");
             fscanf(stdin,"%d", &numCuenta);
-            eliminarLista(&frente, &final, &numCuenta, alumnoNumCuenta, liberarAlumno);
-        }else if(op == 3){
-
+            fprintf(stdout,"Se eliminaron %d alumnos\n",eliminarLista(&frente, &final, &numCuenta, alumnoNumCuenta, liberarAlumno));
+        }else if(op == 3){ //Editar alumno
+            fprintf(stdout,"Ingresa el numero de cuenta a editar: ");
+            fscanf(stdin,"%d", &numCuenta);
+            if(buscarLista(frente, &numCuenta, alumnoNumCuenta) == OK){
+                aux = editarAlumno(numCuenta);
+                if(aux != NULL){
+                    editarLista(&frente, &numCuenta, alumnoNumCuenta, aux, sizeof(ALUMNO));
+                    free(aux);
+                }
+            }else{
+                fprintf(stdout,"No se encontro el alumno\n");
+            }
         }else if(op == 4){
             imprimirLista(frente, imprimirAlumno);
         }else if(op == 5){

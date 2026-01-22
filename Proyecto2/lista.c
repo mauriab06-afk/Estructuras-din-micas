@@ -47,9 +47,10 @@ void liberarMemoria(NODO** frente, NODO** final, void (*liberar)(void*)){
     *final = NULL;
 }
 
-void eliminarLista(NODO** frente, NODO** final, void* parametro, int (*condicion)(void*, void*), void (*liberar)(void*)){
+int eliminarLista(NODO** frente, NODO** final, void* parametro, int (*condicion)(void*, void*), void (*liberar)(void*)){
     NODO* temp = *frente;
     NODO* sig;
+    int eliminados = 0;
     while(temp != NULL){
         sig = temp->sig;
         if(condicion(parametro, temp->datos) == 1){
@@ -68,7 +69,31 @@ void eliminarLista(NODO** frente, NODO** final, void* parametro, int (*condicion
             }
             liberar(temp->datos);
             free(temp);
+            eliminados++;
         }
         temp = sig;
     }
+    return eliminados;
+}
+
+int editarLista(NODO** frente, void* parametro, int (*condicion)(void*, void*), void* editado, size_t tam){
+    NODO* temp = *frente;
+    while(temp != NULL){
+        if(condicion(parametro, temp->datos) == 1){
+            memcpy(temp->datos, editado, tam);
+            return OK;
+        }
+        temp = temp->sig;
+    }
+    return ERROR;
+}
+
+int buscarLista(NODO* frente, void* parametro, int (*condicion)(void*, void*)){
+    while(frente != NULL){
+        if(condicion(parametro, frente->datos) == 1){
+            return OK;
+        }
+        frente = frente->sig;
+    }
+    return ERROR;
 }
