@@ -32,11 +32,21 @@ int main(void){
                     do{ //Dentro de la cuenta
                         op2 = menuCuenta(cuentaAct->personal->usuario);
                         if(op2 == 1){ //Ver estado de cuenta
-                            fprintf(stdout,"Cuenta corriente: %f\n", cuentaAct->cuenta->corriente);
+                            fprintf(stdout,"Cuenta corriente: %.2f$\n", cuentaAct->cuenta->corriente);
                         }else if(op2 == 2){ //Depositar dinero
                             depositar(cuentaAct->cuenta);
                         }else if(op2 == 3){ //Retirar dinero
-                            retirar(cuentaAct->cuenta);
+                            if(retirar(cuentaAct->cuenta) == ERROR){
+                                fprintf(stdout,"Saldo insuficiente\n");
+                            }else{
+                                fprintf(stdout,"Retiro con exito\n");
+                            }
+                        }else if(op2 == 4){ //Prestamo
+                            if(prestamo(cuentaAct->cuenta) == ERROR){
+                                fprintf(stdout,"No se pudo realizar el prestamo\n");
+                            }else{
+                                fprintf(stdout,"Se realizo el prestamo con exito\n");
+                            }
                         }
                     }while(1);
                 }else{ //Nip no coincide
@@ -64,6 +74,7 @@ int menuCuenta(char usuario[]){
     fprintf(stdout,"1. Estado de cuenta\n");
     fprintf(stdout,"2. Depositar\n");
     fprintf(stdout,"3. Retirar\n");
+    fprintf(stdout,"4. Prestamo\n");
     fscanf(stdin,"%d", &n);
     return n;
 }

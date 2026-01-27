@@ -5,5 +5,6 @@
 
 int depositar(ESTADO* actual);
 int retirar(ESTADO* actual);
+int prestamo(ESTADO* actual);
 
 #endif
