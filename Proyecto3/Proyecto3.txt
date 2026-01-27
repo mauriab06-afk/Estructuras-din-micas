@@ -1,0 +1,13 @@
+En este programa se simulara un cajero automatico:
+
+-Crear cuenta
+-Entrar en cuenta
+    -Depositar
+    -Retirar
+    -Prestamo
+    -Donar
+    -Cuenta de ahorros
+        -Depositar
+        -Retirar
+    -Eliminar cuenta
+-Salir
