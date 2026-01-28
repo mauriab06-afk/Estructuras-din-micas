@@ -6,7 +6,6 @@
 CUENTA* buscarCuenta(CUENTA** frente, char usuario[50]){
     CUENTA* temp = *frente;
     while(temp != NULL){
-        fprintf(stdout,"%s\n",temp->personal->usuario);
         if(strcmp(usuario, temp->personal->usuario) == 0){
             break;
         }

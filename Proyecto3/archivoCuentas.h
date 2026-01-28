@@ -6,5 +6,6 @@
 int leerArchivoCuentas(CUENTA** frente, CUENTA** final);
 int actualizarArchivoCuentas(CUENTA* frente);
 int leerEstadoCuentas(CUENTA** ubicacion);
+int guardarEstadoCuentas(CUENTA** ubicacion);
 
 #endif

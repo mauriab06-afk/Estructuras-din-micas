@@ -22,6 +22,18 @@ int leerEstadoCuentas(CUENTA** ubicacion){
     return OK;
 }
 
+int guardarEstadoCuentas(CUENTA** ubicacion){
+    char archivo[100];
+    FILE* fw;
+    sprintf(archivo, "%s.bin", (*ubicacion)->personal->usuario);
+    fw = fopen(archivo,"wb");
+    if(fw == NULL){
+        return ARCHIVO_ERROR;
+    }
+    fwrite((*ubicacion)->cuenta, sizeof(ESTADO), 1, fw);
+    fclose(fw);
+}
+
 int leerArchivoCuentas(CUENTA** frente, CUENTA** final){
     INFO* cuenta;
     INFO leido;
@@ -37,7 +49,7 @@ int leerArchivoCuentas(CUENTA** frente, CUENTA** final){
             return ERROR; //No se pudo reservar memoria
         }
         cuenta = malloc(sizeof(INFO));
-        if(nueva->personal == NULL){
+        if(cuenta == NULL){
             free(nueva);
             fclose(fr);
             return ERROR; //No se pudo reservar la memoria
@@ -55,6 +67,8 @@ int leerArchivoCuentas(CUENTA** frente, CUENTA** final){
             *final = nueva;
         }
     }
+    fclose(fr);
+    return OK;
 }
 
 int actualizarArchivoCuentas(CUENTA* frente){
@@ -66,5 +80,6 @@ int actualizarArchivoCuentas(CUENTA* frente){
         fwrite(frente->personal, sizeof(INFO), 1, fw);
         frente = frente->sig;
     }
+    fclose(fw);
     return OK;
 }
