@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "archivoCuentas.h"
 #include "estructuraCuenta.h"
 #include "listaCuentas.h"
@@ -55,8 +56,9 @@ int main(void){
                             }else{
                                 fprintf(stdout,"Gracias por su donacion\n");
                             }
-                        }else if(op == 6){ //Cuenta de ahorros
+                        }else if(op2 == 6){ //Cuenta de ahorros
                             do{
+                                fprintf(stdout,"Cuenta de ahorros: %.2f$\n", cuentaAct->cuenta->ahorros);
                                 op3 = menuCuentaAhorros(cuentaAct->personal->usuario);
                                 if(op3 == 1){ //Depositar de cuente corriente a cuenta de ahorros
                                     if(depositarCuentaAhorros(cuentaAct->cuenta) == ERROR){
@@ -87,18 +89,22 @@ int main(void){
                 fprintf(stderr,"Cuenta no encontrada\n");
             }
         }else if(op == 3){
-            fprintf(stdout,"Eliminar cuenta\n")
+            fprintf(stdout,"Eliminar cuenta\n");
+        }else if(op < 1 || op > 4){
+            fprintf(stdout,"Opcion invalida\n");
         }
     }while(op != 4);
 }
 
 int menu(void){
     int n;
-    fprintf(stdout,"BanMau:\n");
+    fprintf(stdout,"  Bienvenido a BanMau\n");
+    fprintf(stdout,"************************\n");
     fprintf(stdout,"1. Crear cuenta\n");
     fprintf(stdout,"2. Acceder a cuenta\n");
     fprintf(stdout,"3. Eliminar cuenta\n");
     fprintf(stdout,"4. Salir\n");
+    fprintf(stdout,"************************\n");
     fprintf(stdout,"Ingresar: ");
     fscanf(stdin,"%d", &n);
     return n;
@@ -107,6 +113,7 @@ int menu(void){
 int menuCuenta(char usuario[]){
     int n;
     fprintf(stdout,"Bienvenido: %s\n", usuario);
+    fprintf(stdout,"*********************\n");
     fprintf(stdout,"1. Estado de cuenta\n");
     fprintf(stdout,"2. Depositar\n");
     fprintf(stdout,"3. Retirar\n");
@@ -114,6 +121,7 @@ int menuCuenta(char usuario[]){
     fprintf(stdout,"5. Donar\n");
     fprintf(stdout,"6. Cuenta de ahorros\n");
     fprintf(stdout,"7. Salir\n");
+    fprintf(stdout,"*********************\n"); 
     fprintf(stdout,"Ingresar: ");
     fscanf(stdin,"%d", &n);
     return n;
@@ -122,10 +130,11 @@ int menuCuenta(char usuario[]){
 int menuCuentaAhorros(char usuario[]){
     int n;
     fprintf(stdout,"Cuenta ahorros: %s\n", usuario);
+    fprintf(stdout,"***************************\n");
     fprintf(stdout,"1. Depositar\n");
     fprintf(stdout,"2. Retirar\n");
     fprintf(stdout,"3. Regresar\n");
-    fprintf(stdout,"Ingresar: ");
-    fscanf(stdout,"%d", &n);
+    fprintf(stdout,"***************************\n");
+    fscanf(stdin,"%d", &n);
     return n;
 }
